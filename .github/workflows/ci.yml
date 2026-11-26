@@ -64,3 +64,40 @@ jobs:
           files: reports/coverage/lcov.info
           disable_search: true
           fail_ci_if_error: true
+
+  package:
+    name: Preparar aplicação estática
+    needs: [test, codecov]
+    if: >-
+      !cancelled() && github.event_name != 'pull_request' &&
+      github.ref == 'refs/heads/main' && vars.ENABLE_PAGES == 'true' &&
+      needs.test.result == 'success' &&
+      (needs.codecov.result == 'success' || needs.codecov.result == 'skipped')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: dist
+
+  deploy:
+    name: Publicar no GitHub Pages
+    needs: package
+    runs-on: ubuntu-latest
+    concurrency:
+      group: github-pages
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/deploy-pages@v4
+        id: deployment
