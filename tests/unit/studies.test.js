@@ -108,4 +108,7 @@ describe('removeStudy', () => {
   test('exclui somente a sessão identificada', () => {
     expect(removeStudy([pending, done], 'a')).toEqual([done])
   })
+  test('mantém a lista quando o identificador não existe', () => {
+    expect(removeStudy([done], 'missing')).toEqual([done])
+  })
 })
