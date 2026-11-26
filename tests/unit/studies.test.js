@@ -1,5 +1,7 @@
 import { describe, expect, test } from 'vitest'
-import { validateStudy, StudyError, addStudy, toggleStudy, removeStudy, visibleStudies, studySummary } from '../../src/studies.js'
+import {
+  addStudy, removeStudy, StudyError, studySummary, toggleStudy, validateStudy, visibleStudies,
+} from '../../src/studies.js'
 
 const math = { title: 'Revisar funções', subject: 'Matemática', minutes: 30 }
 const languages = { title: 'Praticar inglês', subject: 'Idiomas', minutes: 45 }
