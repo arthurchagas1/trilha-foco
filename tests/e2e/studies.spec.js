@@ -19,3 +19,13 @@ test('cadastra uma sessão e conserva os dados ao recarregar a página', async (
   await page.reload()
   await expect(page.getByRole('listitem')).toContainText(session.title)
 })
+
+test('permite corrigir uma duração fora do limite', async ({ page }) => {
+  await addSession(page, { ...session, minutes: '4' })
+  await expect(page.getByRole('alert')).toContainText('entre 5 e 480 minutos')
+  await expect(page.getByRole('listitem')).toHaveCount(0)
+  await expect(page.getByLabel('Título da sessão')).toHaveValue(session.title)
+  await page.getByLabel('Duração em minutos').fill('5')
+  await page.getByRole('button', { name: 'Adicionar sessão' }).click()
+  await expect(page.getByRole('listitem')).toContainText('5 min')
+})
