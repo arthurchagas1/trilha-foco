@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest'
-import { validateStudy, StudyError, addStudy, toggleStudy, removeStudy, visibleStudies } from '../../src/studies.js'
+import { validateStudy, StudyError, addStudy, toggleStudy, removeStudy, visibleStudies, studySummary } from '../../src/studies.js'
 
 const math = { title: 'Revisar funções', subject: 'Matemática', minutes: 30 }
 const languages = { title: 'Praticar inglês', subject: 'Idiomas', minutes: 45 }
@@ -136,5 +136,17 @@ describe('visibleStudies', () => {
   })
   test('retorna lista vazia quando a combinação não corresponde', () => {
     expect(visibleStudies([pending, done], 'pending', 'Idiomas')).toEqual([])
+  })
+})
+
+describe('studySummary', () => {
+  test('zera os indicadores para uma lista vazia', () => {
+    expect(studySummary([])).toEqual({ total: 0, completed: 0, pending: 0, minutes: 0, progress: 0 })
+  })
+  test('conta sessões pendentes e concluídas', () => {
+    expect(studySummary([pending, done])).toMatchObject({ total: 2, completed: 1, pending: 1 })
+  })
+  test('soma somente os minutos de sessões concluídas', () => {
+    expect(studySummary([pending, done, { ...pending, done: true }]).minutes).toBe(75)
   })
 })

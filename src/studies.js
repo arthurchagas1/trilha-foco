@@ -36,3 +36,14 @@ export function visibleStudies(studies, status = 'all', subject = 'all') {
     return matchesStatus && (subject === 'all' || study.subject === subject)
   })
 }
+
+export function studySummary(studies) {
+  const completed = studies.filter(study => study.done)
+  return {
+    total: studies.length,
+    completed: completed.length,
+    pending: studies.length - completed.length,
+    minutes: completed.reduce((sum, study) => sum + study.minutes, 0),
+    progress: studies.length ? Math.round(completed.length * 100 / studies.length) : 0,
+  }
+}
