@@ -18,6 +18,9 @@ describe('readStudies', () => {
   test('recupera uma sessão salva', () => {
     expect(readStudies(storageWith(JSON.stringify([session])))).toEqual([session])
   })
+  test('informa falha em vez de carregar texto JSON corrompido', () => {
+    expect(() => readStudies(storageWith('{'))).toThrow(SyntaxError)
+  })
   test('informa falha quando o JSON salvo não contém uma lista', () => {
     expect(() => readStudies(storageWith('{}'))).toThrow('Formato inválido')
   })
