@@ -59,4 +59,9 @@ describe('writeStudies', () => {
     writeStudies(storage, [])
     expect(readStudies(storage)).toEqual([])
   })
+  test('propaga uma falha de escrita para o aplicativo reagir', () => {
+    const failure = new Error('Cota excedida')
+    const storage = { setItem: () => { throw failure } }
+    expect(() => writeStudies(storage, [session])).toThrow(failure)
+  })
 })
