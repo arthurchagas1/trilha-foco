@@ -17,3 +17,7 @@ export function validateStudy({ title, subject, minutes }) {
   }
   return { title: cleanTitle, subject, minutes }
 }
+
+export function addStudy(studies, input, id = crypto.randomUUID()) {
+  return [...studies, { ...validateStudy(input), id, done: false }]
+}

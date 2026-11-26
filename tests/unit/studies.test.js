@@ -1,7 +1,9 @@
 import { describe, expect, test } from 'vitest'
-import { validateStudy, StudyError } from '../../src/studies.js'
+import { validateStudy, StudyError, addStudy } from '../../src/studies.js'
 
 const math = { title: 'Revisar funções', subject: 'Matemática', minutes: 30 }
+const languages = { title: 'Praticar inglês', subject: 'Idiomas', minutes: 45 }
+const pending = { ...math, id: 'a', done: false }
 
 describe('validateStudy', () => {
   test('aceita uma sessão válida', () => {
@@ -55,5 +57,14 @@ describe('validateStudy', () => {
   })
   test('rejeita duração enviada como texto', () => {
     expect(() => validateStudy({ ...math, minutes: '30' })).toThrow(/duração/)
+  })
+})
+
+describe('addStudy', () => {
+  test('cria uma sessão pendente com o identificador fornecido', () => {
+    expect(addStudy([], math, 'a')).toEqual([pending])
+  })
+  test('mantém as sessões anteriores na ordem em que foram adicionadas', () => {
+    expect(addStudy([pending], languages, 'b').map(study => study.id)).toEqual(['a', 'b'])
   })
 })
