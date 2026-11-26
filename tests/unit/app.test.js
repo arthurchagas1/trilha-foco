@@ -117,4 +117,16 @@ describe('mountApp', () => {
     expect(root.querySelector('#study-title').value).toBe(session.title)
     expect(root.querySelector('li')).toBeNull()
   })
+  test('limpa o aviso de armazenamento após uma gravação funcionar', () => {
+    let firstAccess = true
+    start(() => {
+      if (firstAccess) {
+        firstAccess = false
+        throw new Error('Armazenamento temporariamente indisponível')
+      }
+      return localStorage
+    })
+    submit()
+    expect(root.querySelector('[data-storage-error]').textContent).toBe('')
+  })
 })
