@@ -57,6 +57,12 @@ describe('mountApp', () => {
     expect(root.querySelector('[data-form-error]').textContent).toContain('entre 3 e 60')
     expect(root.querySelector('#study-title').value).toBe('X')
   })
+  test('trata marcação digitada no título como texto', () => {
+    start()
+    submit({ title: '<b>Aula</b>' })
+    expect(root.querySelector('li strong').textContent).toBe('<b>Aula</b>')
+    expect(root.querySelector('li b')).toBeNull()
+  })
   test('atualiza o progresso e o tempo estudado ao concluir a sessão', () => {
     writeStudies(localStorage, [session])
     start()
