@@ -23,6 +23,9 @@ describe('validateStudy', () => {
   test('rejeita título acima de sessenta caracteres', () => {
     expect(() => validateStudy({ ...math, title: 'x'.repeat(61) })).toThrow(StudyError)
   })
+  test('rejeita título de dois caracteres após aparar espaços', () => {
+    expect(() => validateStudy({ ...math, title: '  JS  ' })).toThrow(StudyError)
+  })
   test('rejeita disciplina desconhecida', () => {
     expect(() => validateStudy({ ...math, subject: 'História' })).toThrow(/disciplina/)
   })
