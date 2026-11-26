@@ -91,4 +91,7 @@ describe('toggleStudy', () => {
   test('reabre uma sessão concluída', () => {
     expect(toggleStudy([done], 'b')).toEqual([{ ...done, done: false }])
   })
+  test('altera somente a sessão identificada', () => {
+    expect(toggleStudy([pending, done], 'a')[1]).toEqual(done)
+  })
 })
