@@ -50,4 +50,7 @@ describe('validateStudy', () => {
   test('rejeita duração fracionária', () => {
     expect(() => validateStudy({ ...math, minutes: 5.5 })).toThrow(/inteira/)
   })
+  test('rejeita duração ausente convertida para NaN pelo formulário', () => {
+    expect(() => validateStudy({ ...math, minutes: NaN })).toThrow(/duração/)
+  })
 })
