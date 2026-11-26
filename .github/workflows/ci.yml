@@ -25,3 +25,21 @@ jobs:
       - run: npm ci
       - name: Testes de unidade e cobertura
         run: npm run test:coverage
+      - name: Instalar Chromium e dependências no Linux
+        if: runner.os == 'Linux'
+        run: npx playwright install --with-deps chromium
+      - name: Instalar Chromium no macOS e no Windows
+        if: runner.os != 'Linux'
+        run: npx playwright install chromium
+      - name: Testes end-to-end
+        run: npm run test:e2e
+      - name: Guardar relatórios
+        if: always()
+        uses: actions/upload-artifact@v6
+        with:
+          name: relatorios-${{ matrix.os }}
+          path: |
+            coverage/
+            playwright-report/
+            test-results/
+          if-no-files-found: ignore
