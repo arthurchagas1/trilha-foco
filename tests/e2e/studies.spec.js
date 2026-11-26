@@ -29,3 +29,13 @@ test('permite corrigir uma duração fora do limite', async ({ page }) => {
   await page.getByRole('button', { name: 'Adicionar sessão' }).click()
   await expect(page.getByRole('listitem')).toContainText('5 min')
 })
+
+test('recalcula progresso e minutos ao concluir e reabrir a sessão', async ({ page }) => {
+  await addSession(page, session)
+  await page.getByRole('button', { name: 'Concluir Revisar funções' }).click()
+  await expect(page.getByRole('progressbar')).toHaveAttribute('value', '100')
+  await expect(page.getByRole('region', { name: 'Resumo dos estudos' })).toContainText('30')
+  await page.getByRole('button', { name: 'Reabrir Revisar funções' }).click()
+  await expect(page.getByRole('progressbar')).toHaveAttribute('value', '0')
+  await expect(page.getByRole('listitem')).toContainText('Pendente')
+})
