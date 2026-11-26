@@ -54,4 +54,9 @@ describe('writeStudies', () => {
     writeStudies(storage, [session])
     expect(JSON.parse(storage.getItem(STORAGE_KEY))).toEqual([session])
   })
+  test('substitui as sessões anteriores quando todas são excluídas', () => {
+    const storage = storageWith(JSON.stringify([session]))
+    writeStudies(storage, [])
+    expect(readStudies(storage)).toEqual([])
+  })
 })
