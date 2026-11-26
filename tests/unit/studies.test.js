@@ -131,4 +131,7 @@ describe('visibleStudies', () => {
   test('filtra sessões pela disciplina', () => {
     expect(visibleStudies([pending, done], 'all', 'Matemática')).toEqual([pending])
   })
+  test('combina os filtros de status e disciplina', () => {
+    expect(visibleStudies([pending, done], 'done', 'Idiomas')).toEqual([done])
+  })
 })
