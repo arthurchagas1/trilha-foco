@@ -53,4 +53,7 @@ describe('validateStudy', () => {
   test('rejeita duração ausente convertida para NaN pelo formulário', () => {
     expect(() => validateStudy({ ...math, minutes: NaN })).toThrow(/duração/)
   })
+  test('rejeita duração enviada como texto', () => {
+    expect(() => validateStudy({ ...math, minutes: '30' })).toThrow(/duração/)
+  })
 })
