@@ -16,6 +16,10 @@ describe('validateStudy', () => {
   test('aceita título com três caracteres', () => {
     expect(validateStudy({ ...math, title: 'SQL' }).title).toBe('SQL')
   })
+  test('aceita título com sessenta caracteres', () => {
+    const title = 'x'.repeat(60)
+    expect(validateStudy({ ...math, title }).title).toBe(title)
+  })
   test('rejeita título acima de sessenta caracteres', () => {
     expect(() => validateStudy({ ...math, title: 'x'.repeat(61) })).toThrow(StudyError)
   })
