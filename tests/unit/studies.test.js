@@ -111,4 +111,9 @@ describe('removeStudy', () => {
   test('mantém a lista quando o identificador não existe', () => {
     expect(removeStudy([done], 'missing')).toEqual([done])
   })
+  test('preserva a lista de entrada ao excluir', () => {
+    const studies = Object.freeze([pending, done])
+    removeStudy(studies, 'a')
+    expect(studies).toEqual([pending, done])
+  })
 })
