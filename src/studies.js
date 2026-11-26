@@ -21,3 +21,7 @@ export function validateStudy({ title, subject, minutes }) {
 export function addStudy(studies, input, id = crypto.randomUUID()) {
   return [...studies, { ...validateStudy(input), id, done: false }]
 }
+
+export function toggleStudy(studies, id) {
+  return studies.map(study => study.id === id ? { ...study, done: !study.done } : study)
+}

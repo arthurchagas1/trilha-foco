@@ -1,9 +1,10 @@
 import { describe, expect, test } from 'vitest'
-import { validateStudy, StudyError, addStudy } from '../../src/studies.js'
+import { validateStudy, StudyError, addStudy, toggleStudy } from '../../src/studies.js'
 
 const math = { title: 'Revisar funções', subject: 'Matemática', minutes: 30 }
 const languages = { title: 'Praticar inglês', subject: 'Idiomas', minutes: 45 }
 const pending = { ...math, id: 'a', done: false }
+const done = { ...languages, id: 'b', done: true }
 
 describe('validateStudy', () => {
   test('aceita uma sessão válida', () => {
@@ -80,5 +81,14 @@ describe('addStudy', () => {
   })
   test('propaga a validação de uma sessão inválida', () => {
     expect(() => addStudy([], { ...math, minutes: 1 }, 'a')).toThrow(StudyError)
+  })
+})
+
+describe('toggleStudy', () => {
+  test('conclui uma sessão pendente', () => {
+    expect(toggleStudy([pending], 'a')).toEqual([{ ...pending, done: true }])
+  })
+  test('reabre uma sessão concluída', () => {
+    expect(toggleStudy([done], 'b')).toEqual([{ ...done, done: false }])
   })
 })
