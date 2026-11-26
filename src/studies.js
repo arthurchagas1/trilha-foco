@@ -25,3 +25,7 @@ export function addStudy(studies, input, id = crypto.randomUUID()) {
 export function toggleStudy(studies, id) {
   return studies.map(study => study.id === id ? { ...study, done: !study.done } : study)
 }
+
+export function removeStudy(studies, id) {
+  return studies.filter(study => study.id !== id)
+}

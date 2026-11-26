@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest'
-import { validateStudy, StudyError, addStudy, toggleStudy } from '../../src/studies.js'
+import { validateStudy, StudyError, addStudy, toggleStudy, removeStudy } from '../../src/studies.js'
 
 const math = { title: 'Revisar funções', subject: 'Matemática', minutes: 30 }
 const languages = { title: 'Praticar inglês', subject: 'Idiomas', minutes: 45 }
@@ -101,5 +101,11 @@ describe('toggleStudy', () => {
   })
   test('mantém todos os dados quando o identificador não existe', () => {
     expect(toggleStudy([pending, done], 'missing')).toEqual([pending, done])
+  })
+})
+
+describe('removeStudy', () => {
+  test('exclui somente a sessão identificada', () => {
+    expect(removeStudy([pending, done], 'a')).toEqual([done])
   })
 })
