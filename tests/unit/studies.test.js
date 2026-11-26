@@ -155,4 +155,7 @@ describe('studySummary', () => {
   test('arredonda um terço para trinta e três por cento', () => {
     expect(studySummary([pending, pending, done]).progress).toBe(33)
   })
+  test('alcança cem por cento quando todas as sessões foram concluídas', () => {
+    expect(studySummary([done]).progress).toBe(100)
+  })
 })
