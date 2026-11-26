@@ -99,4 +99,7 @@ describe('toggleStudy', () => {
     toggleStudy([study], 'a')
     expect(study.done).toBe(false)
   })
+  test('mantém todos os dados quando o identificador não existe', () => {
+    expect(toggleStudy([pending, done], 'missing')).toEqual([pending, done])
+  })
 })
