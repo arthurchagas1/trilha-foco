@@ -52,3 +52,11 @@ test('combina filtros de status e disciplina sem ocultar o total geral', async (
   await expect(page.getByRole('listitem')).toContainText(session.title)
   await expect(page.getByRole('progressbar')).toHaveAttribute('value', '50')
 })
+
+test('exclui uma sessão e mantém a lista vazia ao voltar ao site', async ({ page }) => {
+  await addSession(page, session)
+  await page.getByRole('button', { name: 'Excluir Revisar funções' }).click()
+  await expect(page.getByText('Sua lista está vazia.', { exact: false })).toBeVisible()
+  await page.reload()
+  await expect(page.getByRole('listitem')).toHaveCount(0)
+})
