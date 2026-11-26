@@ -32,6 +32,9 @@ describe('validateStudy', () => {
   test('rejeita disciplina desconhecida', () => {
     expect(() => validateStudy({ ...math, subject: 'História' })).toThrow(/disciplina/)
   })
+  test('rejeita a opção vazia de disciplina', () => {
+    expect(() => validateStudy({ ...math, subject: '' })).toThrow(/disciplina/)
+  })
   test('rejeita quatro minutos', () => {
     expect(() => validateStudy({ ...math, minutes: 4 })).toThrow(/duração/)
   })
