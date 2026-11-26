@@ -67,4 +67,9 @@ describe('addStudy', () => {
   test('mantém as sessões anteriores na ordem em que foram adicionadas', () => {
     expect(addStudy([pending], languages, 'b').map(study => study.id)).toEqual(['a', 'b'])
   })
+  test('preserva a lista de entrada ao adicionar', () => {
+    const studies = Object.freeze([pending])
+    addStudy(studies, languages, 'b')
+    expect(studies).toEqual([pending])
+  })
 })
