@@ -43,3 +43,24 @@ jobs:
             playwright-report/
             test-results/
           if-no-files-found: ignore
+
+  codecov:
+    name: Publicar cobertura no Codecov
+    needs: test
+    if: github.event_name != 'pull_request' && vars.ENABLE_CODECOV == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/download-artifact@v7
+        with:
+          name: relatorios-ubuntu-latest
+          path: reports
+      - uses: codecov/codecov-action@v5
+        with:
+          use_oidc: true
+          files: reports/coverage/lcov.info
+          disable_search: true
+          fail_ci_if_error: true
