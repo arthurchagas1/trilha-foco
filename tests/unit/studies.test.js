@@ -13,6 +13,9 @@ describe('validateStudy', () => {
   test('preserva espaços internos do título', () => {
     expect(validateStudy({ ...math, title: 'Revisar  funções' }).title).toBe('Revisar  funções')
   })
+  test('aceita título com três caracteres', () => {
+    expect(validateStudy({ ...math, title: 'SQL' }).title).toBe('SQL')
+  })
   test('rejeita título acima de sessenta caracteres', () => {
     expect(() => validateStudy({ ...math, title: 'x'.repeat(61) })).toThrow(StudyError)
   })
