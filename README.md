@@ -28,13 +28,13 @@ Use Node.js 24, npm e Git. Clone o repositório e execute:
 
 ```bash
 npm ci
-npx playwright install chromium
+npx playwright install --no-shell chromium
 npm test
 npm run test:coverage
 npm run test:e2e
 ```
 
-No Linux, caso faltem bibliotecas de sistema para o Chromium, execute `npx playwright install --with-deps chromium`. O Playwright compila a aplicação e abre a versão de produção antes dos cenários. Use `npx playwright show-report` para consultar o relatório E2E.
+No Linux, caso faltem bibliotecas de sistema para o Chromium, execute `npx playwright install --with-deps --no-shell chromium`. O Playwright compila a aplicação e abre a versão de produção antes dos cenários. Use `npx playwright show-report` para consultar o relatório E2E.
 
 O relatório HTML de cobertura fica em `coverage/index.html` e o LCOV em `coverage/lcov.info`. A suíte exige pelo menos 80% de cobertura global em linhas, instruções, funções e ramos. O conjunto medido inclui todos os arquivos JavaScript de `src/`.
 
