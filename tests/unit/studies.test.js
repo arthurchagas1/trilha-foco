@@ -134,4 +134,7 @@ describe('visibleStudies', () => {
   test('combina os filtros de status e disciplina', () => {
     expect(visibleStudies([pending, done], 'done', 'Idiomas')).toEqual([done])
   })
+  test('retorna lista vazia quando a combinação não corresponde', () => {
+    expect(visibleStudies([pending, done], 'pending', 'Idiomas')).toEqual([])
+  })
 })
