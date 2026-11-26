@@ -152,4 +152,7 @@ describe('studySummary', () => {
   test('mantém tempo estudado em zero enquanto tudo está pendente', () => {
     expect(studySummary([pending]).minutes).toBe(0)
   })
+  test('arredonda um terço para trinta e três por cento', () => {
+    expect(studySummary([pending, pending, done]).progress).toBe(33)
+  })
 })
