@@ -38,6 +38,9 @@ describe('validateStudy', () => {
   test('aceita a duração mínima de cinco minutos', () => {
     expect(validateStudy({ ...math, minutes: 5 }).minutes).toBe(5)
   })
+  test('aceita a duração máxima de quatrocentos e oitenta minutos', () => {
+    expect(validateStudy({ ...math, minutes: 480 }).minutes).toBe(480)
+  })
   test('rejeita quatro minutos', () => {
     expect(() => validateStudy({ ...math, minutes: 4 })).toThrow(/duração/)
   })
