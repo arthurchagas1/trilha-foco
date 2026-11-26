@@ -78,4 +78,7 @@ describe('addStudy', () => {
     expect(first.id).toBeTruthy()
     expect(first.id).not.toBe(second.id)
   })
+  test('propaga a validação de uma sessão inválida', () => {
+    expect(() => addStudy([], { ...math, minutes: 1 }, 'a')).toThrow(StudyError)
+  })
 })
