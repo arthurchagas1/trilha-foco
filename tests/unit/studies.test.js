@@ -72,4 +72,10 @@ describe('addStudy', () => {
     addStudy(studies, languages, 'b')
     expect(studies).toEqual([pending])
   })
+  test('gera identificadores diferentes para cadastros com o mesmo título', () => {
+    const first = addStudy([], math)[0]
+    const second = addStudy([], math)[0]
+    expect(first.id).toBeTruthy()
+    expect(first.id).not.toBe(second.id)
+  })
 })
