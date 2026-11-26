@@ -149,4 +149,7 @@ describe('studySummary', () => {
   test('soma somente os minutos de sessões concluídas', () => {
     expect(studySummary([pending, done, { ...pending, done: true }]).minutes).toBe(75)
   })
+  test('mantém tempo estudado em zero enquanto tudo está pendente', () => {
+    expect(studySummary([pending]).minutes).toBe(0)
+  })
 })
