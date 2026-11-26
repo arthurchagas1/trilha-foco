@@ -91,6 +91,12 @@ describe('mountApp', () => {
     expect(readStudies(localStorage)).toEqual([])
     expect(root.querySelector('[data-total]').textContent).toBe('0')
   })
+  test('mantém o foco na lista se houver outra sessão após a exclusão', () => {
+    writeStudies(localStorage, [session, { ...session, id: 'b', title: 'Estudar matrizes' }])
+    start()
+    root.querySelector('li .remove').click()
+    expect(document.activeElement.getAttribute('aria-label')).toBe('Concluir Estudar matrizes')
+  })
   test('mostra o estado vazio quando o filtro por disciplina não encontra sessões', () => {
     writeStudies(localStorage, [session])
     start()
