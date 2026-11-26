@@ -72,3 +72,14 @@ button:hover { background: #dfeee2; }
 .actions { display: flex; gap: 6px; }
 .remove { color: #8f302a; background: #fff; border-color: #d4b4af; }
 .remove:hover { background: #fbebe9; }
+
+@media (max-width: 780px) {
+  .hero, .workspace { grid-template-columns: 1fr; }
+}
+@media (max-width: 480px) {
+  .shell { width: calc(100% - 24px); }
+  main.shell { padding-top: 12px; }
+  .metrics { gap: 6px; }
+  .metrics div { padding: 8px; }
+  .study-list li { align-items: flex-start; flex-direction: column; }
+}
