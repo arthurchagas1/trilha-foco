@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest'
-import { validateStudy, StudyError, addStudy, toggleStudy, removeStudy } from '../../src/studies.js'
+import { validateStudy, StudyError, addStudy, toggleStudy, removeStudy, visibleStudies } from '../../src/studies.js'
 
 const math = { title: 'Revisar funções', subject: 'Matemática', minutes: 30 }
 const languages = { title: 'Praticar inglês', subject: 'Idiomas', minutes: 45 }
@@ -115,5 +115,20 @@ describe('removeStudy', () => {
     const studies = Object.freeze([pending, done])
     removeStudy(studies, 'a')
     expect(studies).toEqual([pending, done])
+  })
+})
+
+describe('visibleStudies', () => {
+  test('exibe todas as sessões por padrão', () => {
+    expect(visibleStudies([pending, done])).toEqual([pending, done])
+  })
+  test('filtra sessões pendentes', () => {
+    expect(visibleStudies([pending, done], 'pending')).toEqual([pending])
+  })
+  test('filtra sessões concluídas', () => {
+    expect(visibleStudies([pending, done], 'done')).toEqual([done])
+  })
+  test('filtra sessões pela disciplina', () => {
+    expect(visibleStudies([pending, done], 'all', 'Matemática')).toEqual([pending])
   })
 })

@@ -29,3 +29,10 @@ export function toggleStudy(studies, id) {
 export function removeStudy(studies, id) {
   return studies.filter(study => study.id !== id)
 }
+
+export function visibleStudies(studies, status = 'all', subject = 'all') {
+  return studies.filter(study => {
+    const matchesStatus = status === 'all' || study.done === (status === 'done')
+    return matchesStatus && (subject === 'all' || study.subject === subject)
+  })
+}
