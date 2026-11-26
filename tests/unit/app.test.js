@@ -70,6 +70,13 @@ describe('mountApp', () => {
     expect(root.querySelector('progress').value).toBe(100)
     expect(root.querySelector('[data-minutes]').textContent).toBe('30')
   })
+  test('mantém o foco sobre a mesma sessão após concluir um título repetido', () => {
+    writeStudies(localStorage, [session, { ...session, id: 'b' }])
+    start()
+    root.querySelectorAll('li')[1].querySelector('button').click()
+    expect(document.activeElement.textContent).toBe('Reabrir')
+    expect(document.activeElement.closest('li')).toBe(root.querySelectorAll('li')[1])
+  })
   test('desloca o foco ao filtro se a sessão concluída sair da lista de pendentes', () => {
     writeStudies(localStorage, [session])
     start()
