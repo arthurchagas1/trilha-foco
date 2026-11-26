@@ -46,6 +46,11 @@ describe('mountApp', () => {
     submit()
     expect(readStudies(localStorage)).toEqual([{ ...session, id: '1' }])
   })
+  test('limpa o formulário depois de salvar', () => {
+    start()
+    submit()
+    expect(root.querySelector('#study-title').value).toBe('')
+  })
   test('mostra o erro de validação e conserva o título para correção', () => {
     start()
     submit({ title: 'X' })
