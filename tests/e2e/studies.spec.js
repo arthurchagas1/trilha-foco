@@ -39,3 +39,16 @@ test('recalcula progresso e minutos ao concluir e reabrir a sessão', async ({ p
   await expect(page.getByRole('progressbar')).toHaveAttribute('value', '0')
   await expect(page.getByRole('listitem')).toContainText('Pendente')
 })
+
+test('combina filtros de status e disciplina sem ocultar o total geral', async ({ page }) => {
+  await addSession(page, session)
+  await addSession(page, { title: 'Praticar conversação', subject: 'Idiomas', minutes: '40' })
+  await page.getByRole('button', { name: 'Concluir Revisar funções' }).click()
+  await page.getByLabel('Status', { exact: true }).selectOption('done')
+  await page.getByLabel('Filtrar disciplina').selectOption('Idiomas')
+  await expect(page.getByText('Nenhuma sessão corresponde aos filtros.')).toBeVisible()
+  await page.getByLabel('Filtrar disciplina').selectOption('Matemática')
+  await expect(page.getByRole('listitem')).toHaveCount(1)
+  await expect(page.getByRole('listitem')).toContainText(session.title)
+  await expect(page.getByRole('progressbar')).toHaveAttribute('value', '50')
+})
