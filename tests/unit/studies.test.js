@@ -94,4 +94,9 @@ describe('toggleStudy', () => {
   test('altera somente a sessão identificada', () => {
     expect(toggleStudy([pending, done], 'a')[1]).toEqual(done)
   })
+  test('preserva o estado original da sessão alternada', () => {
+    const study = Object.freeze({ ...pending })
+    toggleStudy([study], 'a')
+    expect(study.done).toBe(false)
+  })
 })
